@@ -1,4 +1,5 @@
 .vs/
 obj/
+bin/Debug/net6.0/Config.json
 
 *.user

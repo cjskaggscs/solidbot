@@ -65,15 +65,23 @@ namespace Discord_Bot
                         case 'm':
                             remindTimeValue *= 60 * 1000;
                             sleepTime += remindTimeValue;
+                            if (sleepTime > Int32.MaxValue || sleepTime <= 0) throw new ArgumentOutOfRangeException($"Argument out of range: {sleepTime}.");
                             break;
                         default:
                             throw new FormatException($"Unexpected reminder time unit: {remindTime}.");
                     }
                 }
+                catch (ArgumentOutOfRangeException ex)
+                {
+                    await ReplyAsync($"Sorry, my memory isn't that good. Please keep reminders under 24 days' time.");
+                    Console.WriteLine($"{ex.Message}");
+                    throw;
+                }
                 catch (FormatException ex)
                 {
                     await ReplyAsync($"{ex.Message}. Please use the format `;remindme <message>, #d #hr #m`.");
                     Console.WriteLine($"{ex.Message}");
+                    throw;
                 }
                 catch (Exception ex)
                 {
