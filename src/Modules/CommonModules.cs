@@ -18,7 +18,7 @@ namespace Discord_Bot
         [Summary("testburger")]
         public async Task Testburger()
         {
-            string burgerPath = $"{Directory.GetCurrentDirectory()}/Data.json";
+            string burgerPath = $"{AppDomain.CurrentDomain.BaseDirectory}Data.json";
             string json = File.ReadAllText(burgerPath);
             dynamic jsonObject = Newtonsoft.Json.JsonConvert.DeserializeObject(json);
             int burgerCounter = jsonObject["testburger"];
