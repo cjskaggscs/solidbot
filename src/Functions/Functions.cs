@@ -54,7 +54,7 @@ namespace Discord_Bot
         public static JObject GetConfig()
         {
             // Get the config file.
-            using StreamReader configJson = new StreamReader(Directory.GetCurrentDirectory() + @"/Config.json");
+            using StreamReader configJson = new StreamReader($"{AppDomain.CurrentDomain.BaseDirectory}Config.json");
                 return (JObject)JsonConvert.DeserializeObject(configJson.ReadToEnd());
         }
 

@@ -37,7 +37,7 @@ namespace Discord_Bot
             string selection = options[new Random().Next(options.Length)];
 
             // ReplyAsync() is a shortcut for Context.Channel.SendMessageAsync()
-            await ReplyAsync($"I choose **{selection}**.");            
+            await ReplyAsync($"I choose **{selection.Trim()}**.");
         }
 
         [Command("amiadmin")]
