@@ -1,5 +1,6 @@
 .vs/
 obj/
 bin/Debug/net6.0/Config.json
+bin/Debug/net6.0/Data.json
 
 *.user
