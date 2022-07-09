@@ -7,15 +7,15 @@ namespace Discord_Bot
 {
     public class ModSample : ModuleBase<SocketCommandContext>
     {
-        [Command("reloadconfig")]
-        [Alias("reload")]
-        [Summary("Reloads the config and applies changes")]
-        [RequireOwner] // Require the bot owner to execute the command successfully.
-        public async Task ReloadConfig()
-        {
-            await Functions.SetBotStatusAsync(Context.Client);
-            await ReplyAsync("Reloaded!");
-        }
+        //[Command("reloadconfig")]
+        //[Alias("reload")]
+        //[Summary("Reloads the config and applies changes")]
+        //[RequireOwner] // Require the bot owner to execute the command successfully.
+        //public async Task ReloadConfig()
+        //{
+        //    await Functions.SetBotStatusAsync(Context.Client);
+        //    await ReplyAsync("Reloaded!");
+        //}
 
         //[Command("kick")]
         //[Summary("Kick a user from the server.")]

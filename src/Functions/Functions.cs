@@ -4,6 +4,7 @@ using Discord.WebSocket;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using System;
+using System.Collections;
 using System.IO;
 using System.Threading;
 using System.Threading.Tasks;
@@ -64,10 +65,22 @@ namespace Discord_Bot
             return user.GetAvatarUrl(size: size) ?? user.GetDefaultAvatarUrl(); 
         }
 
-        public static string HandleReminder(int time, string message, SocketCommandContext context)
+        public static EmbedBuilder HandleReminder(int time, string message, SocketCommandContext context)
         {
+            // TODO: replace thread sleeping with better system eventually
             Thread.Sleep(time);
-            return $"{context.Message.Author.Mention} {message}";
+
+            // EmbedBuilder embed = new EmbedBuilder();
+            string shortDate = DateTime.Now.AddMilliseconds(-1 * time).ToShortDateString();
+            string shortTime = DateTime.Now.AddMilliseconds(-1 * time).ToShortTimeString();
+            EmbedBuilder embed = new EmbedBuilder() 
+            {
+                Description = message,
+                Color = Color.LightOrange,
+                Footer = new EmbedFooterBuilder().WithText($"Reminder from {shortDate} {shortTime}"),
+                Url = context.Message.GetJumpUrl()
+            };
+            return embed;
         }
     }
 }

@@ -10,15 +10,18 @@ namespace Discord_Bot
 {
     public class Program
     {
+        public static CommandService CommandService { get; set; }
+
         static void Main(string[] args)
             => new Program().MainAsync().GetAwaiter().GetResult();
 
         public async Task MainAsync()
         {
             using var services = ConfigureServices();
+            CommandService = services.GetService<CommandService>();
 
             Console.WriteLine("Connecting...");
-            var client = services.GetRequiredService<DiscordSocketClient>();
+            DiscordSocketClient client = services.GetRequiredService<DiscordSocketClient>();
 
             client.Log += Log;
             services.GetRequiredService<CommandService>().Log += Log;
