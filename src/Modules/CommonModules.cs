@@ -135,9 +135,9 @@ namespace Discord_Bot
             Group myVar = stringMatch.Groups["remindTime"];
             int sleepTime = 0;
 
-            foreach (Group group in stringMatch.Groups["remindTime"].Captures)
+            foreach (Capture capture in stringMatch.Groups["remindTime"].Captures)
             {
-                string remindTime = group.Value.ToLower();
+                string remindTime = capture.Value.ToLower();
                 int remindTimeValue;
                 char remindTimeUnit;
 
