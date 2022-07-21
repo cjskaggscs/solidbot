@@ -122,7 +122,8 @@ namespace Discord_Bot
         [Summary("Set a reminder (currently up to 24 days while this command is a WIP). `remindme <message>, #d #hr #m`. Combinations of days, hours, or minutes are accepted.")]
         public async Task RemindMe([Remainder] string message = "")
         {
-            Match stringMatch = Regex.Match(message, @"\b(?<remindMessage>.*)+,\s+(?<remindTime>\d\s*\w*\s*){1,3}");
+            // Match stringMatch = Regex.Match(message, @"\b(?<remindMessage>.*)+,\s+(?<remindTime>\d+\s*\w*\s*){1,3}");
+            Match stringMatch = Regex.Match(message, @"\b(?<remindMessage>.+),\s+(?<remindTime>\d+\s*\w*\s*)");
             string remindMessage;
 
             if (stringMatch.Groups["remindMessage"].Captures.Count > 0) { remindMessage = stringMatch.Groups["remindMessage"].Captures[0].Value; }
