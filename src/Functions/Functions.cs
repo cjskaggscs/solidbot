@@ -71,9 +71,10 @@ namespace Discord_Bot
             Thread.Sleep(time);
 
             // EmbedBuilder embed = new EmbedBuilder();
-            DateTime currentTime = TimeZoneInfo.ConvertTime(DateTime.Now, TimeZoneInfo.FindSystemTimeZoneById("Pacific Standard Time"));
-            string shortDate = currentTime.AddMilliseconds(-1 * time).ToShortDateString();
-            string shortTime = currentTime.AddMilliseconds(-1 * time).ToShortTimeString();
+            DateTime currentTime = TimeZoneInfo.ConvertTime(DateTime.Now, TimeZoneInfo.Utc);
+            const double PSTTIMEOFFSET = -7;
+            string shortDate = currentTime.AddMilliseconds(-1 * time).AddHours(PSTTIMEOFFSET).ToShortDateString();
+            string shortTime = currentTime.AddMilliseconds(-1 * time).AddHours(PSTTIMEOFFSET).ToShortTimeString();
             EmbedBuilder embed = new EmbedBuilder() 
             {
                 Description = message,
