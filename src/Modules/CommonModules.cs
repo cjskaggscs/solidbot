@@ -122,8 +122,7 @@ namespace Discord_Bot
         [Summary("Set a reminder (currently up to 24 days while this command is a WIP). `remindme <message>, #d #hr #m`. Combinations of days, hours, or minutes are accepted.")]
         public async Task RemindMe([Remainder] string message = "")
         {
-            // Match stringMatch = Regex.Match(message, @"\b(?<remindMessage>.*)+,\s+(?<remindTime>\d+\s*\w*\s*){1,3}");
-            Match stringMatch = Regex.Match(message, @"\b(?<remindMessage>.+),\s+(?<remindTime>\d+\s*\w*\s*)");
+            Match stringMatch = Regex.Match(message, @"\b(?<remindMessage>.+),\s+(?<remindTime>\d+\s*\w*\s*){1,3}");
             string remindMessage;
 
             if (stringMatch.Groups["remindMessage"].Captures.Count > 0) { remindMessage = stringMatch.Groups["remindMessage"].Captures[0].Value; }
@@ -136,9 +135,9 @@ namespace Discord_Bot
             Group myVar = stringMatch.Groups["remindTime"];
             int sleepTime = 0;
 
-            foreach (Group group in stringMatch.Groups["remindTime"].Captures)
+            foreach (Capture capture in stringMatch.Groups["remindTime"].Captures)
             {
-                string remindTime = group.Value.ToLower();
+                string remindTime = capture.Value.ToLower();
                 int remindTimeValue;
                 char remindTimeUnit;
 
