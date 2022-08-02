@@ -71,13 +71,14 @@ namespace Discord_Bot
             Thread.Sleep(time);
 
             // EmbedBuilder embed = new EmbedBuilder();
-            string shortDate = DateTime.Now.AddMilliseconds(-1 * time).ToShortDateString();
-            string shortTime = DateTime.Now.AddMilliseconds(-1 * time).ToShortTimeString();
+            DateTime currentTime = TimeZoneInfo.ConvertTime(DateTime.Now, TimeZoneInfo.FindSystemTimeZoneById("Pacific Standard Time"));
+            string shortDate = currentTime.AddMilliseconds(-1 * time).ToShortDateString();
+            string shortTime = currentTime.AddMilliseconds(-1 * time).ToShortTimeString();
             EmbedBuilder embed = new EmbedBuilder() 
             {
                 Description = message,
                 Color = Color.LightOrange,
-                Footer = new EmbedFooterBuilder().WithText($"Reminder from {shortDate} {shortTime}"),
+                Footer = new EmbedFooterBuilder().WithText($"Reminder from {shortDate} {shortTime} PST"),
                 Url = context.Message.GetJumpUrl()
             };
             return embed;
