@@ -48,8 +48,10 @@ namespace Discord_Bot
                 // Execute the command.
                 var result = await _commands.ExecuteAsync(context, argPos, _services);
 
-                if (!result.IsSuccess && result.Error.HasValue)          
-                    await context.Channel.SendMessageAsync($":x: {result.ErrorReason}");          
+                // If command result is unknown command, skip over - not a severe error
+                if (!result.IsSuccess && result.Error.HasValue)
+                    if (!(result.Error.Value is CommandError.UnknownCommand))
+                        await context.Channel.SendMessageAsync($":x: {result.ErrorReason}");          
             }
         }
 
