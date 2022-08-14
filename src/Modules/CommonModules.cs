@@ -193,8 +193,9 @@ namespace Discord_Bot
         }
 
         [Command("what about babies")]
+        [Alias("what about babies?")]
         [Summary("Eunie asks about babies.")]
-        public async Task WhatAboutBabies()
+        public async Task WhatAboutBabies([Remainder] string message = null)
             => await Context.Channel.SendFileAsync($"{Path.GetDirectoryName(System.Reflection.Assembly.GetAssembly(typeof(Program)).Location)}/Assets/5RVZ5WlfJ0iSszOD.mp4");
     }
 }

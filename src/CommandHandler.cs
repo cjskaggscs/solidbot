@@ -8,6 +8,7 @@ using Newtonsoft.Json.Linq;
 using Discord;
 using System.Linq;
 using Newtonsoft.Json;
+using System.IO;
 
 namespace Discord_Bot
 {
@@ -43,8 +44,9 @@ namespace Discord_Bot
             string[] prefixes = JsonConvert.DeserializeObject<string[]>(config["prefixes"].ToString());
             string[] specialCommands = JsonConvert.DeserializeObject<string[]>(config["special_commands"].ToString());
 
-            // Check if message has any of the prefixes or mentiones the bot.
-            if (prefixes.Any(x => message.HasStringPrefix(x, ref argPos)) || message.HasMentionPrefix(_client.CurrentUser, ref argPos))
+            // Check if message has any of the prefixes or mentions the bot.
+            if (prefixes.Any(x => message.HasStringPrefix(x, ref argPos)) || message.HasMentionPrefix(_client.CurrentUser, ref argPos) 
+                             || specialCommands.Any(x => message.Content.ToLower().Contains(x)))
             {
                 // Execute the command.
                 var result = await _commands.ExecuteAsync(context, argPos, _services);
@@ -54,16 +56,16 @@ namespace Discord_Bot
                     if (!(result.Error.Value is CommandError.UnknownCommand))
                         await context.Channel.SendMessageAsync($":x: {result.ErrorReason}");          
             }
-            else if (specialCommands.Any(x => message.Content.ToLower().Contains(x)))
-            {
-                // Execute the command.
-                var result = await _commands.ExecuteAsync(context, argPos, _services);
+            //else if (specialCommands.Any(x => message.Content.ToLower().Contains(x)))
+            //{
+            //    // TODO: If special commands with arguments are added later, then we can't scrap the args
+            //    // TODO: For now, scrap the remainder of the message so that the function call operates
 
-                // If command result is unknown command, skip over - not a severe error
-                if (!result.IsSuccess && result.Error.HasValue)
-                    if (!(result.Error.Value is CommandError.UnknownCommand))
-                        await context.Channel.SendMessageAsync($":x: {result.ErrorReason}");
-            }
+            //    foreach (string command in specialCommands)
+            //    {
+                    
+            //    }
+            //}
         }
 
         private async Task SendJoinMessageAsync(SocketGuild guild)
