@@ -41,6 +41,7 @@ namespace Discord_Bot
 
             JObject config = Functions.GetConfig();
             string[] prefixes = JsonConvert.DeserializeObject<string[]>(config["prefixes"].ToString());
+            string[] specialCommands = JsonConvert.DeserializeObject<string[]>(config["special_commands"].ToString());
 
             // Check if message has any of the prefixes or mentiones the bot.
             if (prefixes.Any(x => message.HasStringPrefix(x, ref argPos)) || message.HasMentionPrefix(_client.CurrentUser, ref argPos))
@@ -52,6 +53,16 @@ namespace Discord_Bot
                 if (!result.IsSuccess && result.Error.HasValue)
                     if (!(result.Error.Value is CommandError.UnknownCommand))
                         await context.Channel.SendMessageAsync($":x: {result.ErrorReason}");          
+            }
+            else if (specialCommands.Any(x => message.Content.ToLower().Contains(x)))
+            {
+                // Execute the command.
+                var result = await _commands.ExecuteAsync(context, argPos, _services);
+
+                // If command result is unknown command, skip over - not a severe error
+                if (!result.IsSuccess && result.Error.HasValue)
+                    if (!(result.Error.Value is CommandError.UnknownCommand))
+                        await context.Channel.SendMessageAsync($":x: {result.ErrorReason}");
             }
         }
 

@@ -191,5 +191,10 @@ namespace Discord_Bot
             await ReplyAsync(message: $"{Context.Message.Author.Mention}",
                              embed: Functions.HandleReminder(sleepTime, remindMessage, Context).Build());
         }
+
+        [Command("what about babies")]
+        [Summary("Eunie asks about babies.")]
+        public async Task WhatAboutBabies()
+            => await Context.Channel.SendFileAsync($"{Path.GetDirectoryName(System.Reflection.Assembly.GetAssembly(typeof(Program)).Location)}/Assets/5RVZ5WlfJ0iSszOD.mp4");
     }
 }
